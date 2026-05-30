@@ -1,0 +1,14 @@
+[project]
+name = "notebook-lm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "jinja2>=3.1.6",
+    "langchain-qdrant>=1.1.0",
+    "langchain-text-splitters>=1.1.2",
+    "ollama>=0.6.2",
+    "opendataloader-pdf[hybrid]>=2.4.7",
+    "qdrant-client>=1.18.0",
+]
