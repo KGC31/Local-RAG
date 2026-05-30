@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     top_k: int = Field(default=5, ge=1, le=64)
 
     # --- Embeddings & reranker ---
+    embedding: Literal["ollama", "huggingface"] = "ollama"
     embedding_model: str = "GreenNode/GreenNode-Embedding-Large-VN-Mixed-V1"
     reranker_model: str = "BAAI/bge-reranker-v2-m3"
 
@@ -38,6 +39,9 @@ class Settings(BaseSettings):
 
         if self.hf_device < -1:
             raise ValueError("hf_device must be -1 (CPU) or >= 0 (GPU).")
+        
+        if self.embedding not in ["ollama", "huggingface"]:
+            raise ValueError("embedding must be either 'ollama' or 'huggingface'.")
 
         return self
 
