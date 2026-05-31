@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import warnings
 
 from cli.command_handler import handle_command
 
@@ -33,6 +34,7 @@ def print_header():
 
 def main():
     print_header()
+    warnings.filterwarnings( "ignore", message="Payload indexes have no effect in the local Qdrant.*", )
 
     try:
         while True:
