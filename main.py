@@ -3,6 +3,7 @@ import os
 import warnings
 
 from cli.command_handler import handle_command
+from cli.rag_answer import rag_answer_command
 
 
 HEADER_FILE = "header.txt"
@@ -38,7 +39,7 @@ def main():
 
     try:
         while True:
-            user_input = input("\n> ").strip()
+            user_input = input("\n>>> ").strip()
 
             if not user_input:
                 print("> Please enter a command or query.")
@@ -49,7 +50,7 @@ def main():
                 if not should_continue:
                     break
             else:
-                print(f"\nYou entered:\n{user_input}")
+                rag_answer_command(user_input)
                 
 
     except KeyboardInterrupt:

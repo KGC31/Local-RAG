@@ -1,10 +1,10 @@
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance
-from langchain_qdrant import QdrantVectorStore
+from qdrant_client.models import SparseVectorParams, VectorParams, Distance
+from langchain_qdrant import QdrantVectorStore, RetrievalMode
 from qdrant_client.http import models as qmodels
 
 from src.config import settings
-from src.embeddings.registry import get_embeddings
+from src.embeddings.registry import get_embeddings, get_sparse_embeddings
 
 def get_client() -> QdrantClient:
     settings.storage_dir.mkdir(parents=True, exist_ok=True)
@@ -30,12 +30,14 @@ def ensure_collection(recreate=False, collection_name=None):
     if not exists:
         dim = len(get_embeddings().embed_query("dimension probe"))
 
-        client.create_collection(
-            collection_name=name,
-            vectors_config=qmodels.VectorParams(
-                size=dim,
-                distance=qmodels.Distance.COSINE
-            ),
+        client.create_collection( 
+            collection_name=name, 
+            vectors_config={ 
+                "dense": VectorParams( size=dim, distance=Distance.COSINE, ) 
+            }, 
+            sparse_vectors_config={ 
+                "sparse": SparseVectorParams() 
+            }, 
         )
 
     payload_schema = client.get_collection(name).payload_schema or {}
@@ -47,10 +49,14 @@ def ensure_collection(recreate=False, collection_name=None):
                 field_name=field,
                 field_schema=schema
             )
-
+    
 def get_vector_store():
     return QdrantVectorStore(
         client=get_client(),
         collection_name=settings.qdrant_collection,
         embedding=get_embeddings(),
+        sparse_embedding=get_sparse_embeddings(),
+        retrieval_mode=RetrievalMode.HYBRID,
+        vector_name="dense", 
+        sparse_vector_name="sparse",
     )

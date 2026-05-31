@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 
 class ChunkMetadata(BaseModel):
@@ -28,3 +28,9 @@ class Summary(BaseModel):
     summary: str
     key_points: List[str]
     citations: List[Citation]
+    
+class RagAnswer(BaseModel):
+    question: str
+    answer: str
+    citations: list[Citation] = Field(default_factory=list)
+    chunks: list[RetrievedChunk] = Field(default_factory=list)

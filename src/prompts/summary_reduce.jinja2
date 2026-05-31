@@ -1,0 +1,39 @@
+You are combining multiple partial study summaries into one final coherent summary.
+
+Rules:
+- Use only information explicitly present in the partial summaries.
+- Do not invent details.
+- Do not add outside knowledge.
+- Merge overlapping ideas.
+- Remove redundant information.
+- Preserve the most important concepts, definitions, relationships, and reasoning.
+- Keep the writing clear, neutral, and practical for study.
+- Write the summary and key points in English.
+- If the summaries are empty or unrelated, return an empty summary and an empty list of key points.
+
+Output STRICTLY valid JSON with this exact shape and no extra text:
+
+{
+  "summary": "A coherent multi-paragraph final study summary.",
+  "key_points": [
+    "concise learnable fact",
+    "concise learnable fact"
+  ]
+}
+
+Partial summaries:
+
+{% for partial in partials %}
+----------------------------------------
+
+Summary:
+{{ partial.summary }}
+
+Key points:
+{% for point in partial.key_points %}
+- {{ point }}
+{% endfor %}
+
+{% endfor %}
+
+Respond with ONLY the JSON object.

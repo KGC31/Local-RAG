@@ -1,0 +1,27 @@
+You are summarizing a partial section of a larger study document.
+
+Rules:
+- Use only facts explicitly supported by the provided context.
+- Do not invent details.
+- Do not add outside knowledge.
+- Focus on important concepts and learnable information.
+- Compress repetitive information.
+- Keep the summary concise but information-dense.
+- Write the summary and key points in English.
+- If the context is empty or unrelated, return an empty summary and an empty list of key points.
+
+Output STRICTLY valid JSON with this exact shape and no extra text:
+
+{
+  "summary": "A concise summary of this section.",
+  "key_points": [
+    "important learnable fact",
+    "important learnable fact"
+  ]
+}
+
+Context:
+
+{{ context_text }}
+
+Respond with ONLY the JSON object.

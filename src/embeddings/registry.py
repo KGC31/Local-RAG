@@ -1,4 +1,6 @@
+
 from langchain.embeddings import Embeddings
+from langchain_qdrant import FastEmbedSparse
 from src.config import settings
 
 def get_embeddings() -> Embeddings:
@@ -8,3 +10,6 @@ def get_embeddings() -> Embeddings:
     elif settings.embedding == "huggingface":
         from src.embeddings.hugging_face_embed import HuggingFaceEmbeddings
         return HuggingFaceEmbeddings(model_name=settings.embedding_model)
+    
+def get_sparse_embeddings() -> Embeddings:
+    return FastEmbedSparse(model_name="Qdrant/bm25")

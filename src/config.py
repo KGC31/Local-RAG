@@ -6,7 +6,7 @@ from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-ENV_FILE = PROJECT_ROOT / "backend/.env"
+ENV_FILE = PROJECT_ROOT / ".env"
 
 
 class Settings(BaseSettings):

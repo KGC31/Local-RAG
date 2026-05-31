@@ -13,10 +13,10 @@ list_command = {
 
 
 def help_command():
-    print("\nAvailable commands:")
+    print("\nAvailable commands:\n")
 
     for cmd, desc in list_command.items():
-        print(f"|   {cmd:<12} {desc}")
+        print(f"   {cmd:<24} {desc}")
 
 
 def ingest_command(*args): 
@@ -50,8 +50,8 @@ def ingest_command(*args):
                 print("\nNo PDF files provided.") 
                 return 
             
-        ingest( pdf_paths=pdf_paths, chunker=chunker, chunk_size=chunk_size, chunk_overlap=chunk_overlap, ) 
-        print("\nIngestion complete.")
+        result = ingest( pdf_paths=pdf_paths, chunker=chunker, chunk_size=chunk_size, chunk_overlap=chunk_overlap, ) 
+        print(f"\nIngestion complete. Indexed {result} chunks.")
 
 
 def bye_command():
